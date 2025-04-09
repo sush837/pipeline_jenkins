@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Check out the repository
+                git 'https://github.com/your-account/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'make build'  // Replace with your build command
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'make test'   // Replace with your test command
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'make deploy' // Replace with your deployment command
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up...'
+        }
+    }
+}
+
